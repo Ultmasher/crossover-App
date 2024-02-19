@@ -15,7 +15,7 @@ const ResultPage = ({ resultData }) => {
         </thead>
         <tbody>
           <tr>
-            <td>Karl</td>
+            <td>{resultData.userName}</td>
             <td>{resultData.correctAnswer}</td>
             <td>{resultData.points}</td>
           </tr>
