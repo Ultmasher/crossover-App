@@ -1,25 +1,24 @@
 import React from "react";
 
-const ResultPage = () => {
+const ResultPage = ({ resultData }) => {
+  console.log(resultData);
   return (
     <div>
       <h1>Quiz Results</h1>
       <table>
         <thead>
           <tr>
-            <th>Question</th>
-            <th>Your Answer</th>
-            <th>Correct Answer</th>
+            <th>User</th>
+            <th>Correct answers</th>
+            <th>Points</th>
           </tr>
         </thead>
         <tbody>
-          {/* {results.map((result, index) => (
-            <tr key={index}>
-              <td>{result.question}</td>
-              <td>{result.yourAnswer}</td>
-              <td>{result.correctAnswer}</td>
-            </tr>
-          ))} */}
+          <tr>
+            <td>Karl</td>
+            <td>{resultData.correctAnswer}</td>
+            <td>{resultData.points}</td>
+          </tr>
         </tbody>
       </table>
     </div>
