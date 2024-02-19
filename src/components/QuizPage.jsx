@@ -136,8 +136,13 @@ const QuizPage = ({ resultData, setResultData }) => {
 
             {/* Submit button */}
             {isSubmitButtonShown && (
-              <div>
-                <button onClick={submitAnswer}>Submit</button>
+              <div className="flex justify-center pt-6">
+                <button
+                  onClick={submitAnswer}
+                  className="py-3 px-6 rounded bg-indigo-500 text-white text-2xl  dark:bg-indigo-700"
+                >
+                  Submit
+                </button>
               </div>
             )}
 
