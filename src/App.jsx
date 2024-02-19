@@ -7,6 +7,7 @@ import "./App.css";
 
 function App() {
   const [resultData, setResultData] = useState({
+    userName: "",
     playedQuestions: 0,
     correctAnswer: 0,
     points: 0,
@@ -15,7 +16,15 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<StartingPage />} />
+          <Route
+            path="/"
+            element={
+              <StartingPage
+                resultData={resultData}
+                setResultData={setResultData}
+              />
+            }
+          />
           <Route
             path="/quiz"
             element={
