@@ -1,6 +1,7 @@
+const SERVER_URL = 'https://crossover-backend.onrender.com/';
 export const fetchQuestions = async () => {
     try {
-      const response = await fetch("https://crossover-backend.onrender.com/");
+      const response = await fetch(SERVER_URL);
       if (!response.ok) {
         throw new Error("Failed to fetch Questions.");
       }
