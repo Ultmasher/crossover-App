@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
-import fetchedData from "../data/questions.json";
+import fetchedData from "../data/questions2.json";
 import axios from "axios";
 import ThemeToggleButton from "./ThemeToggleButton";
 import AnswerBlock from "./AnswerBlock.jsx";
