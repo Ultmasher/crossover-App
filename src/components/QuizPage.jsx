@@ -85,63 +85,73 @@ const QuizPage = ({ resultData, setResultData }) => {
   }, []);
 
   return (
-    <div className="flex-column justify-center items-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
-      <div className="flex justify-end">
-        <ThemeToggleButton />
-      </div>
-      <h1 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white">
-        React Quiz
-      </h1>
-      <h2 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white text-center">
-        {" "}
-        Question {currentQuestion + 1}
-      </h2>
-      <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white">
-        {data[currentQuestion].question}
-      </p>
+    <div className="flex justify-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
+      <div className="flex-column sm:w-full lg:w-4/5 justify-start items-start">
+        <div className="flex justify-end">
+          <ThemeToggleButton />
+        </div>
+        <h1 className="flex items-center justify-center my-1 text-lg font-bold text-zinc-800 dark:text-white">
+          React Quiz
+        </h1>
+        <h2 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white text-center">
+          {" "}
+          Question {currentQuestion + 1}
+        </h2>
+        <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white">
+          {data[currentQuestion].question}
+        </p>
 
-      <div className="flex-column justify-center items-center mt-4">
-        {data[currentQuestion].options.map((item, index) => (
-          <div key={index}>
-            <input
-              type="radio"
-              value={item}
-              checked={selectedOption === item}
-              onChange={handleOptionChange}
-              disabled={isAnswerSubmitted}
-            />
-            <label className="text-3xl"> {item}</label>
+        <div className="flex justify-center mt-8">
+          <div className="flex flex-col">
+            {data[currentQuestion].options.map((item, index) => (
+              <div key={index} className="flex my-2 items-center">
+                <input
+                  className="flex mr-3"
+                  type="radio"
+                  value={item}
+                  checked={selectedOption === item}
+                  onChange={handleOptionChange}
+                  disabled={isAnswerSubmitted}
+                />
+                <label className="text-3xl"> {item}</label>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Submit button */}
+        {isSubmitButtonShown && (
+          <div className="flex mt-8 justify-center">
+            <button
+              onClick={submitAnswer}
+              className="py-2 px-4 rounded bg-indigo-400 text-white"
+            >
+              Submit
+            </button>
+          </div>
+        )}
+
+        {/* Showing current answer results */}
+        {isNextQuestionButtonShown && (
+          <AnswerBlock
+            userPromt={userPromt}
+            selectedOption={selectedOption}
+            data={data}
+            gameFinished={gameFinished}
+            handleNextQuestion={handleNextQuestion}
+            currentQuestion={currentQuestion}
+          />
+        )}
+
+        {/* Results button */}
+        {gameFinished && (
+          <div>
+            <Link to="/result">
+              <button>View Results</button>
+            </Link>
+          </div>
+        )}
       </div>
-
-      {/* Submit button */}
-      {isSubmitButtonShown && (
-        <div>
-          <button onClick={submitAnswer}>Submit</button>
-        </div>
-      )}
-
-      {/* Showing current answer results */}
-      {isNextQuestionButtonShown && (
-        <AnswerBlock
-          userPromt={userPromt}
-          selectedOption={selectedOption}
-          data={data}
-          gameFinished={gameFinished}
-          handleNextQuestion={handleNextQuestion}
-          currentQuestion={currentQuestion}
-        />
-      )}
-
-      {/* Results button */}
-      {gameFinished && (
-        <div>
-          <Link to="/result">
-            <button>View Results</button>
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
