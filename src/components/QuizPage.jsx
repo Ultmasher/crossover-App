@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
-import fetchedData from "../data/questions2.json";
+import fetchedData from "../data/questions.json";
 import axios from "axios";
 import ThemeToggleButton from "./ThemeToggleButton";
+import AnswerBlock from "./AnswerBlock.jsx";
 
 const QuizPage = ({ resultData, setResultData }) => {
   const [data, setData] = useState([...fetchedData.questions]);
@@ -84,22 +85,22 @@ const QuizPage = ({ resultData, setResultData }) => {
   }, []);
 
   return (
-    <div className="flex-column justify-center items-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-50">
-      <div className="flex jsutify-end items-end">
+    <div className="flex-column justify-center items-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
+      <div className="flex justify-end">
         <ThemeToggleButton />
       </div>
-      <h1 className="flex items-center justify-center text-lg text-zinc-800">
+      <h1 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white">
         React Quiz
       </h1>
-      <h2 className="flex items-center justify-center text-lg text-zinc-800">
+      <h2 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white text-center">
         {" "}
         Question {currentQuestion + 1}
       </h2>
-      <p className="flex items-center justify-center text-xl text-zinc-950">
+      <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white">
         {data[currentQuestion].question}
       </p>
-      {/* <h2>Answers</h2> might not need this  */}
-      <div>
+
+      <div className="flex-column justify-center items-center mt-4">
         {data[currentQuestion].options.map((item, index) => (
           <div key={index}>
             <input
@@ -109,40 +110,31 @@ const QuizPage = ({ resultData, setResultData }) => {
               onChange={handleOptionChange}
               disabled={isAnswerSubmitted}
             />
-            <label> {item}</label>
+            <label className="text-3xl"> {item}</label>
           </div>
         ))}
       </div>
+
+      {/* Submit button */}
       {isSubmitButtonShown && (
         <div>
           <button onClick={submitAnswer}>Submit</button>
         </div>
       )}
+
+      {/* Showing current answer results */}
       {isNextQuestionButtonShown && (
-        <div>
-          <div>
-            <p>{userPromt}</p>
-          </div>
-          <div>
-            <p>Your Answer: {selectedOption}</p>
-          </div>
-          <div>
-            <p>
-              Correct Answer:{" "}
-              {
-                data[currentQuestion].options[
-                  data[currentQuestion].correctOption
-                ]
-              }
-            </p>
-          </div>
-          {!gameFinished && (
-            <div>
-              <button onClick={handleNextQuestion}>Next Question</button>
-            </div>
-          )}
-        </div>
+        <AnswerBlock
+          userPromt={userPromt}
+          selectedOption={selectedOption}
+          data={data}
+          gameFinished={gameFinished}
+          handleNextQuestion={handleNextQuestion}
+          currentQuestion={currentQuestion}
+        />
       )}
+
+      {/* Results button */}
       {gameFinished && (
         <div>
           <Link to="/result">
