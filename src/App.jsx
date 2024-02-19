@@ -33,7 +33,12 @@ function App() {
           />
           <Route
             path="/result"
-            element={<ResultPage resultData={resultData} />}
+            element={
+              <ResultPage
+                resultData={resultData}
+                setResultData={setResultData}
+              />
+            }
           />
         </Routes>
       </BrowserRouter>
