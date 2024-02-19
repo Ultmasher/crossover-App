@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import data from "../data/questions.json";
+import { fetchQuestions } from "../../api/api";
 
 const QuizPage = () => {
   const [selectedOption, setSelectedOption] = useState("");
