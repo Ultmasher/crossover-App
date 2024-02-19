@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 //import fetchedData from "../data/questions22.json";
 import ThemeToggleButton from "./ThemeToggleButton";
 import AnswerBlock from "./AnswerBlock.jsx";
-import { fetchQuestions } from "../../api/api";
+//import { fetchQuestions } from "../../api/api";
 
 const QuizPage = ({ resultData, setResultData }) => {
-  const [data, setData] = useState([...fetchQuestions.data.questions]);
+  //const [data, setData] = useState([...fetchQuestions.data.questions]);
+  const [data, setData] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedIndex, setSelectedIndex] = useState("");
@@ -17,14 +18,26 @@ const QuizPage = ({ resultData, setResultData }) => {
   const [isNextQuestionButtonShown, setIsNextQuestionButtonShown] =
     useState(false);
   const [userPromt, setUserPromt] = useState("");
-  // const [resultData, setResultData] = useState({
-  //   playedQuestions: 0,
-  //   correctAnswer: 0,
-  //   points: 0,
-  // });
 
   //fetch with axios
-  //console.log(data);
+  const SERVER_URL = "https://crossover-backend.onrender.com/";
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(SERVER_URL);
+        console.log(response);
+        if (!response.ok) {
+          throw new Error("Failed to fetch Questions.");
+        }
+        const data = await response.json();
+        setData(data.questions);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchQuestions();
+  }, []);
+  console.log(data);
 
   const handleOptionChange = (event) => {
     setIsSubmitButtonShown(true);
@@ -85,64 +98,70 @@ const QuizPage = ({ resultData, setResultData }) => {
   }, []);
 
   return (
-    <div className="flex-column justify-center items-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
-      <div className="flex justify-end">
-        <ThemeToggleButton />
-      </div>
-      <h1 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white">
-        React Quiz
-      </h1>
-      <h2 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white text-center">
-        {" "}
-        Question {currentQuestion + 1}
-      </h2>
-      <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white">
-        {data[currentQuestion].question}
-      </p>
-
-      <div className="flex-column justify-center items-center mt-4">
-        {data[currentQuestion].options.map((item, index) => (
-          <div key={index}>
-            <input
-              type="radio"
-              value={item}
-              checked={selectedOption === item}
-              onChange={handleOptionChange}
-              disabled={isAnswerSubmitted}
-            />
-            <label className="text-3xl"> {item}</label>
+    <>
+      {data.length !== 0 ? (
+        <div className="flex-column justify-center items-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
+          <div className="flex justify-end">
+            <ThemeToggleButton />
           </div>
-        ))}
-      </div>
+          <h1 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white">
+            React Quiz
+          </h1>
+          <h2 className="flex items-center justify-center my-1 text-lg text-zinc-800 dark:text-white text-center">
+            {" "}
+            Question {currentQuestion + 1}
+          </h2>
+          <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white">
+            {data[currentQuestion].question}
+          </p>
 
-      {/* Submit button */}
-      {isSubmitButtonShown && (
-        <div>
-          <button onClick={submitAnswer}>Submit</button>
+          <div className="flex-column justify-center items-center mt-4">
+            {data[currentQuestion].options.map((item, index) => (
+              <div key={index}>
+                <input
+                  type="radio"
+                  value={item}
+                  checked={selectedOption === item}
+                  onChange={handleOptionChange}
+                  disabled={isAnswerSubmitted}
+                />
+                <label className="text-3xl"> {item}</label>
+              </div>
+            ))}
+          </div>
+
+          {/* Submit button */}
+          {isSubmitButtonShown && (
+            <div>
+              <button onClick={submitAnswer}>Submit</button>
+            </div>
+          )}
+
+          {/* Showing current answer results */}
+          {isNextQuestionButtonShown && (
+            <AnswerBlock
+              userPromt={userPromt}
+              selectedOption={selectedOption}
+              data={data}
+              gameFinished={gameFinished}
+              handleNextQuestion={handleNextQuestion}
+              currentQuestion={currentQuestion}
+            />
+          )}
+
+          {/* Results button */}
+          {gameFinished && (
+            <div>
+              <Link to="/result">
+                <button>View Results</button>
+              </Link>
+            </div>
+          )}
         </div>
+      ) : (
+        <p>Loading</p>
       )}
-
-      {/* Showing current answer results */}
-      {isNextQuestionButtonShown && (
-        <AnswerBlock
-          userPromt={userPromt}
-          selectedOption={selectedOption}
-          data={data}
-          gameFinished={gameFinished}
-          handleNextQuestion={handleNextQuestion}
-          currentQuestion={currentQuestion}
-        />
-      )}
-
-      {/* Results button */}
-      {gameFinished && (
-        <div>
-          <Link to="/result">
-            <button>View Results</button>
-          </Link>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
