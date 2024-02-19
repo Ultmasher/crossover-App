@@ -87,7 +87,7 @@ const QuizPage = ({ resultData, setResultData }) => {
     setSelectedIndex("");
     setSelectedOption("");
     setIsNextQuestionButtonShown(false);
-    setIsSubmitButtonShown(true);
+    setIsSubmitButtonShown(false);
     setIsAnswerSubmitted(false);
   };
 
@@ -160,9 +160,11 @@ const QuizPage = ({ resultData, setResultData }) => {
 
             {/* Results button */}
             {gameFinished && (
-              <div>
+              <div className="flex justify-center mt-6">
                 <Link to="/result">
-                  <button>View Results</button>
+                  <button className="py-3 px-6 rounded bg-indigo-500 text-white text-2xl  dark:bg-indigo-700">
+                    View Results
+                  </button>
                 </Link>
               </div>
             )}
