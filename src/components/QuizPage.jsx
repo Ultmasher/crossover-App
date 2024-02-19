@@ -86,7 +86,7 @@ const QuizPage = ({ resultData, setResultData }) => {
 
   return (
     <div className="flex justify-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
-      <div className="flex-column sm:w-full lg:w-4/5 justify-start items-start">
+      <div className="flex-column sm:w-full lg:w-4/5 xl:w-1/2 justify-start items-start">
         <div className="flex justify-end">
           <ThemeToggleButton />
         </div>
@@ -97,11 +97,11 @@ const QuizPage = ({ resultData, setResultData }) => {
           {" "}
           Question {currentQuestion + 1}
         </h2>
-        <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white">
+        <p className="flex items-center justify-center py-2 text-3xl text-zinc-950 dark:text-white text-center">
           {data[currentQuestion].question}
         </p>
 
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center sm:mt-5 mt-8">
           <div className="flex flex-col">
             {data[currentQuestion].options.map((item, index) => (
               <div key={index} className="flex my-2 items-center">
@@ -124,7 +124,7 @@ const QuizPage = ({ resultData, setResultData }) => {
           <div className="flex mt-8 justify-center">
             <button
               onClick={submitAnswer}
-              className="py-2 px-4 rounded bg-indigo-400 text-white"
+              className="py-2 px-4 rounded bg-indigo-400 dark:bg-indigo-800 text-white "
             >
               Submit
             </button>
