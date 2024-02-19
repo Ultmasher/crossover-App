@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
-import fetchedData from "../data/questions2.json";
-import axios from "axios";
+//import fetchedData from "../data/questions22.json";
 import ThemeToggleButton from "./ThemeToggleButton";
 import AnswerBlock from "./AnswerBlock.jsx";
+import { fetchQuestions } from "../../api/api";
 
 const QuizPage = ({ resultData, setResultData }) => {
-  const [data, setData] = useState([...fetchedData.questions]);
+  const [data, setData] = useState([...fetchQuestions.data.questions]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedIndex, setSelectedIndex] = useState("");
