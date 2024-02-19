@@ -100,7 +100,7 @@ const QuizPage = ({ resultData, setResultData }) => {
   return (
     <>
       {data.length !== 0 ? (
-        <div className="flex justify-center h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
+        <div className="flex justify-center min-h-screen m-0 p-10 bg-indigo-200 dark:bg-indigo-950  dark:text-white">
           <div className="flex-column sm:w-full lg:w-4/5 xl:w-1/2 justify-start items-start">
             <div className="flex justify-end">
               <ThemeToggleButton />
