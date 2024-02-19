@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import data from "../data/questions.json";
 
 const QuizPage = () => {
   const [selectedOption, setSelectedOption] = useState("");
+  console.log(data);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -11,7 +13,7 @@ const QuizPage = () => {
   return (
     <div>
       <h1>Quiz</h1>
-      <h2>Question</h2>
+      <h2>Quedstion</h2>
       <p>question text</p>
       <h2>Answers</h2>
       <div>
@@ -50,8 +52,9 @@ const QuizPage = () => {
         />
         <label>Option 4</label>
       </div>
+      <button>Next Question</button>
       <Link to="/result">
-        <button>Next</button>
+        <button>View Results</button>
       </Link>
     </div>
   );
